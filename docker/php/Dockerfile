@@ -9,3 +9,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Match UID/GID to the host user so files created in the container are owned by you
+RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
+USER www-data
